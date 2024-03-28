@@ -1,0 +1,8 @@
+<launch>
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch" >
+        <arg name="enable_depth" value="false"/>
+        <arg name="enable_gyro" value="false"/>
+        <arg name="enable_accel" value="false"/>
+    </include> 
+    <node pkg='web_video_server' type="web_video_server" name="web_video_server"/>
+</launch>
