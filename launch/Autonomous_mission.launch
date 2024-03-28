@@ -1,7 +1,7 @@
 <launch>
     <!-- Arguments -->
     <arg name="cmd_vel_topic" default="/cmd_vel" />
-    <arg name="odom_topic" default="/rtabmap/odom" />
+    <arg name="odom_topic" default="odom" />
     <arg name="move_forward_only" default="false"/>
     <arg name="map_file" default="$(find snow_removal)/maps/map.yaml"/>
 
@@ -13,6 +13,8 @@
         <arg name="unite_imu_method" value="linear_interpolation"/>
     </include>
 
+    
+
     <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
     
     <node pkg="imu_filter_madgwick" type="imu_filter_node" name="ImuFilter">
@@ -22,9 +24,7 @@
         <remap from="/imu/data_raw" to="/camera/imu"/>
     </node>
 
-    <node pkg="rtabmap_ros" type="rgbd_odometry" name="rgbd_odometry">
-	    <param name="Odom/ResetCountdown" type="string" value="10"/>
-    </node>
+    
 
     <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
 	    <arg name="args" default="--Vis/MinInliers 15 --Mem/IncrementalMemory false --Mem/InitWMWithAllNodes true"/>
@@ -33,8 +33,8 @@
         <arg name="depth_topic" value="/camera/aligned_depth_to_color/image_raw"/>
         <arg name="camera_info_topic" value="/camera/color/camera_info"/>
         <arg name="depth_camera_info_topic" value="/camera/depth/camera_info"/>
-        <arg name="rtabmapviz" value="true"/>
-        <arg name="rviz" value="false"/>
+        <arg name="rtabmapviz" value="false"/>
+        <arg name="rviz" value="true"/>
 	</include>
 
     <include file="$(find robot_localization)/launch/ukf_template.launch"/>
@@ -63,8 +63,11 @@
     <param name="/ukf_se/use_control" value="false"/>
     <!-- <param name="/ukf_se/odom0_config" value="{true,true,true,}"/> -->
 
+    
     <!-- move_base -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <param name="odom_topic" value="odom"/>
+        <param name="pose_topic" value="/rtabmap/localization_pose"/>
         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
         <rosparam file="$(find snow_removal)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
         <rosparam file="$(find snow_removal)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
