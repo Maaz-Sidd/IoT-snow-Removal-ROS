@@ -4,9 +4,15 @@ raytrace_range: 3.5
 footprint: [[-0.105, -0.105], [-0.105, 0.105], [0.041, 0.105], [0.041, -0.105]]
 #robot_radius: 0.105
 
-inflation_radius: 1.0
-cost_scaling_factor: 3.0
+inflation_radius: 0.1
+cost_scaling_factor: 1.0
 
 map_type: costmap
-observation_sources: scan
-scan: {sensor_frame: base_scan, data_type: LaserScan, topic: scan, marking: true, clearing: true}
+observation_sources: point_cloud_sensor
+point_cloud_sensor: {
+  data_type: PointCloud2,
+  topic: /rtabmap/cloud_map,
+  marking: true,
+  clearing: true,
+  inf_is_valid: true
+}

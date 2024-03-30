@@ -10,7 +10,7 @@
  
     
     <node pkg="imu_filter_madgwick" type="imu_filter_node" name="ImuFilter">
-        <param name="_use_ma" type="bool" value="false" />
+        <param name="use_mag" type="bool" value="false" />
         <param name="_publish_tf" type="bool" value="false" />
         <param name="_world_frame" type="string" value="enu" />
         <remap from="/imu/data_raw" to="/camera/imu"/>
@@ -27,8 +27,8 @@
         <arg name="depth_topic" value="/camera/aligned_depth_to_color/image_raw"/>
         <arg name="camera_info_topic" value="/camera/color/camera_info"/>
         <arg name="depth_camera_info_topic" value="/camera/depth/camera_info"/>
-        <arg name="rtabmapviz" value="true"/>
-        <arg name="rviz" value="false"/>
+        <arg name="rtabmapviz" value="false"/>
+        <arg name="rviz" value="true"/>
 	</include>
 
     <include file="$(find robot_localization)/launch/ukf_template.launch"/>
@@ -56,4 +56,6 @@
     <param name="/ukf_se/imu0_relative" value="false"/>
     <param name="/ukf_se/use_control" value="false"/>
     <!-- <param name="/ukf_se/odom0_config" value="{true,true,true,}"/> -->
+
+    <node pkg="snow_removal" type="path_tracking.py" name="path_tracking"/>
 </launch>

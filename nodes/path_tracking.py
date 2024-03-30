@@ -19,11 +19,11 @@ class PoseSaver:
         _y = position.y
         plt.scatter(_x,_y)
         plt.pause(0.05)
-        self.pose_data.append([position.x, position.y, position.z])
+        self.pose_data.append([position.x, position.y, orientation.z])
 
     def save_pose_to_csv(self):
         rospack = rospkg.RosPack()
-        package_path = rospack.get_path('snow_removal')  # Replace 'your_package_name' with your actual package name
+        package_path = rospack.get_path('snow_removal')
         csv_file = package_path + '/pose_data.csv'
 
         with open(csv_file, mode='w') as file:

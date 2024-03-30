@@ -12,13 +12,12 @@
         <arg name="linear_accel_cov" value="1.0"/>
         <arg name="unite_imu_method" value="linear_interpolation"/>
     </include>
-
     
 
     <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
     
     <node pkg="imu_filter_madgwick" type="imu_filter_node" name="ImuFilter">
-        <param name="_use_ma" type="bool" value="false" />
+        <param name="use_mag" type="bool" value="false" />
         <param name="_publish_tf" type="bool" value="false" />
         <param name="_world_frame" type="string" value="enu" />
         <remap from="/imu/data_raw" to="/camera/imu"/>
@@ -68,6 +67,7 @@
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
         <param name="odom_topic" value="odom"/>
         <param name="pose_topic" value="/rtabmap/localization_pose"/>
+        <param name="map_topic" value="/rtabmap/octomap_grid"/>
         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
         <rosparam file="$(find snow_removal)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
         <rosparam file="$(find snow_removal)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
@@ -79,5 +79,7 @@
         <remap from="odom" to="$(arg odom_topic)"/>
         <param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" />
     </node>
+
+    <!--node pkg="snow_removal" type="autonomous_clearing.py" name="autonomous_clearing"/-->
 
 </launch>
