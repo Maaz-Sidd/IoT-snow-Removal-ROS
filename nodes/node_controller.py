@@ -69,7 +69,7 @@ class CoreNodeController():
             if is_start == True:
                 if self.launch_camera == False:
                     self.launch_camera_ = roslaunch.scriptapi.ROSLaunch()
-                    self.launch_camera_ = roslaunch.parent.ROSLaunchParent(self.uuid, ["/home/maaz/catkin_ws/src/snow_removal/launch/teleop_cam.launch"])
+                    self.launch_camera_ = roslaunch.parent.ROSLaunchParent(self.uuid, [self.ros_package_path + "snow_removal/launch/teleop_cam.launch"])
                     self.launch_camera = True
                     self.launch_camera_.start()
                 else:
@@ -85,7 +85,7 @@ class CoreNodeController():
             if is_start == True:
                 if self.launch_mapping == False:
                     self.launch_mapping_ = roslaunch.scriptapi.ROSLaunch()
-                    self.launch_mapping_ = roslaunch.parent.ROSLaunchParent(self.uuid, ["/home/maaz/catkin_ws/src/snow_removal/launch/mapping.launch"])
+                    self.launch_mapping_ = roslaunch.parent.ROSLaunchParent(self.uuid, [self.ros_package_path + "snow_removal/launch/mapping.launch"])
                     self.launch_mapping = True
                     self.launch_mapping_.start()
                 else:
@@ -100,7 +100,7 @@ class CoreNodeController():
             if is_start == True:
                 if self.save_map == False:
                     self.save_map_ = roslaunch.scriptapi.ROSLaunch()
-                    self.save_map_ = roslaunch.parent.ROSLaunchParent(self.uuid, ["/home/maaz/catkin_ws/src/snow_removal/launch/mapping.launch"])
+                    self.save_map_ = roslaunch.parent.ROSLaunchParent(self.uuid, [self.ros_package_path + "snow_removal/launch/mapping.launch"])
                     self.save_map = True
                     self.save_map_.start()
                 else:
