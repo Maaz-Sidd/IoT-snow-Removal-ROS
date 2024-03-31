@@ -106,7 +106,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES snow_removal
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+#  CATKIN_DEPENDS roscpp rospy std_msgs move_base_msgs actionlib
 #  DEPENDS system_lib
 )
 

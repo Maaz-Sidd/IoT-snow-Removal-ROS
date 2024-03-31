@@ -30,7 +30,8 @@ class PoseSaver:
             writer = csv.writer(file)
             writer.writerow(['Position_X', 'Position_Y', 'Theta'])
             writer.writerows(self.pose_data)
-
+            writer.writerow(0,0,0)
+        
         rospy.loginfo("Pose data saved to {}".format(csv_file))
 
 if __name__ == '__main__':

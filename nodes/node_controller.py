@@ -3,6 +3,7 @@
 import rospy, roslaunch
 from enum import Enum
 import os
+import time
 from std_msgs.msg import UInt8, Float64, String
 
 class CoreNodeController():
@@ -11,7 +12,7 @@ class CoreNodeController():
         self.ros_package_path = self.ros_package_path.replace('snow_removal/nodes', '')
         self.sub_mode_control = rospy.Subscriber('/chatter', String, self.cbReceiveMode, queue_size=1)
   
-        self.Launcher = Enum('Launcher', 'idle teleop_cam mapping save_map' )
+        self.Launcher = Enum('Launcher', 'idle teleop_cam mapping save_map path_planning done_path auto done_auto' )
 
 
         self.current_mode = 'idle'
@@ -55,8 +56,15 @@ class CoreNodeController():
         
         elif self.current_mode == 'done_mapping':
             self.fnLaunch(self.Launcher.save_map.value, True)
+            time.sleep(2)
             self.fnLaunch(self.Launcher.mapping.value, False)
             self.fnLaunch(self.Launcher.teleop_cam.value, True)
+        
+        elif self.current_mode == 'path_planning':
+            self.fnLaunch(self.Launcher.path_planning.value, True)
+
+        elif self.current_mode == 'done_auto':
+            self.fnLaunch(self.Launcher.auto.value, False)
 
         
 
@@ -100,7 +108,7 @@ class CoreNodeController():
             if is_start == True:
                 if self.save_map == False:
                     self.save_map_ = roslaunch.scriptapi.ROSLaunch()
-                    self.save_map_ = roslaunch.parent.ROSLaunchParent(self.uuid, [self.ros_package_path + "snow_removal/launch/mapping.launch"])
+                    self.save_map_ = roslaunch.parent.ROSLaunchParent(self.uuid, [self.ros_package_path + "snow_removal/launch/save_map.launch"])
                     self.save_map = True
                     self.save_map_.start()
                 else:

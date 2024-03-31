@@ -3,6 +3,7 @@
 import rospy
 import csv
 import rospkg
+from std_msgs.msg import String
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import actionlib
 import time
@@ -24,6 +25,7 @@ def read_csv_file(csv_file):
     return goals
 
 def move_base_client():
+    pub_mode_control = rospy.Publisher('/chatter', String, queue_size=1)
     rospy.init_node('autonomous_clearing')
     rospack = rospkg.RosPack()
     package_path = rospack.get_path('snow_removal')
@@ -39,6 +41,9 @@ def move_base_client():
         move_base_goal.target_pose = goal
         client.send_goal(move_base_goal)
         client.wait_for_result()
+
+    pub_mode_control.publish("done_auto")
+    
 
 if __name__ == '__main__':
     try:
