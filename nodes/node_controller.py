@@ -20,7 +20,9 @@ class CoreNodeController():
         
         self.launch_camera = False
         self.launch_mapping = False
-        self.save_map = False    
+        self.save_map = False  
+        self.set_path = False     
+        self.auto = False
 
         self.is_triggered = False
         self.uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
@@ -52,6 +54,7 @@ class CoreNodeController():
         
         elif self.current_mode == 'mapping':
             self.fnLaunch(self.Launcher.teleop_cam.value, False)
+            time.sleep(2)
             self.fnLaunch(self.Launcher.mapping.value, True)
         
         elif self.current_mode == 'done_mapping':
@@ -61,8 +64,18 @@ class CoreNodeController():
             self.fnLaunch(self.Launcher.teleop_cam.value, True)
         
         elif self.current_mode == 'path_planning':
+            self.fnLaunch(self.Launcher.teleop_cam.value, False)
+            time.sleep(2)
             self.fnLaunch(self.Launcher.path_planning.value, True)
 
+        elif self.current_mode == 'done_path':
+            self.fnLaunch(self.Launcher.path_planning.value, False)
+            time.sleep(2)
+            self.fnLaunch(self.Launcher.teleop_cam.value, True)
+        
+        elif self.current_mode == 'auto':
+            self.fnLaunch(self.Launcher.auto.value, True)
+        
         elif self.current_mode == 'done_auto':
             self.fnLaunch(self.Launcher.auto.value, False)
 
@@ -117,6 +130,36 @@ class CoreNodeController():
                 if self.save_map == True:
                     self.save_map = False
                     self.save_map_.shutdown()
+                else:
+                    pass   
+        if launch_num == self.Launcher.set_path.value:
+            if is_start == True:
+                if self.set_path == False:
+                    self.set_path_ = roslaunch.scriptapi.ROSLaunch()
+                    self.set_path_ = roslaunch.parent.ROSLaunchParent(self.uuid, [self.ros_package_path + "snow_removal/launch/path_planning.launch"])
+                    self.set_path = True
+                    self.set_path_.start()
+                else:
+                    pass
+            else:
+                if self.set_path == True:
+                    self.set_path = False
+                    self.set_path_.shutdown()
+                else:
+                    pass   
+        if launch_num == self.Launcher.auto.value:
+            if is_start == True:
+                if self.auto == False:
+                    self.auto_ = roslaunch.scriptapi.ROSLaunch()
+                    self.auto_ = roslaunch.parent.ROSLaunchParent(self.uuid, [self.ros_package_path + "snow_removal/launch/path_planning.launch"])
+                    self.auto = True
+                    self.auto_.start()
+                else:
+                    pass
+            else:
+                if self.auto == True:
+                    self.auto = False
+                    self.auto_.shutdown()
                 else:
                     pass   
                            
