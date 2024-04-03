@@ -45,8 +45,6 @@ class CoreNodeController():
   
     def fnControlNode(self): 
         if self.current_mode == 'teleop':
-            rospy.loginfo("New trigger for camera")
-
             self.fnLaunch(self.Launcher.teleop_cam.value, True)
 
         elif self.current_mode == 'home':
@@ -78,8 +76,6 @@ class CoreNodeController():
         
         elif self.current_mode == 'done_auto':
             self.fnLaunch(self.Launcher.auto.value, False)
-
-        
 
 
             rospy.sleep(2)
@@ -132,7 +128,7 @@ class CoreNodeController():
                     self.save_map_.shutdown()
                 else:
                     pass   
-        if launch_num == self.Launcher.set_path.value:
+        if launch_num == self.Launcher.path_planning.value:
             if is_start == True:
                 if self.set_path == False:
                     self.set_path_ = roslaunch.scriptapi.ROSLaunch()

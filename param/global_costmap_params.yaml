@@ -6,6 +6,8 @@ global_costmap:
   publish_frequency: 10.0
   transform_tolerance: 0.5
   
+
+  map_topic: /map
   rolling_window: false
   static_map: true
  

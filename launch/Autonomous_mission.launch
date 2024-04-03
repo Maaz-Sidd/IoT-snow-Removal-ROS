@@ -80,6 +80,6 @@
         <param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" />
     </node>
 
-    <!--node pkg="snow_removal" type="autonomous_clearing.py" name="autonomous_clearing"/-->
+    <node pkg="snow_removal" type="autonomous_clearing.py" name="autonomous_clearing"/>
 
 </launch>
