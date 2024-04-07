@@ -49,6 +49,8 @@ class CoreNodeController():
 
         elif self.current_mode == 'home':
             self.fnLaunch(self.Launcher.teleop_cam.value, False)
+            self.fnLaunch(self.Launcher.mapping.value, False)
+            self.fnLaunch(self.Launcher.path_planning.value, False)
         
         elif self.current_mode == 'mapping':
             self.fnLaunch(self.Launcher.teleop_cam.value, False)
@@ -147,7 +149,7 @@ class CoreNodeController():
             if is_start == True:
                 if self.auto == False:
                     self.auto_ = roslaunch.scriptapi.ROSLaunch()
-                    self.auto_ = roslaunch.parent.ROSLaunchParent(self.uuid, [self.ros_package_path + "snow_removal/launch/path_planning.launch"])
+                    self.auto_ = roslaunch.parent.ROSLaunchParent(self.uuid, [self.ros_package_path + "snow_removal/launch/Autonomous_mission.launch"])
                     self.auto = True
                     self.auto_.start()
                 else:

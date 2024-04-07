@@ -39,6 +39,7 @@ def move_base_client():
     for goal in goals:
         move_base_goal = MoveBaseGoal()
         move_base_goal.target_pose = goal
+        rospy.loginfo(move_base_goal)
         client.send_goal(move_base_goal)
         client.wait_for_result()
 
@@ -47,6 +48,7 @@ def move_base_client():
 
 if __name__ == '__main__':
     try:
+        time.sleep(10)
         move_base_client()
     except rospy.ROSInterruptException:
         pass

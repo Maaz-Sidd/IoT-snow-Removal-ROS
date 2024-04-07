@@ -58,4 +58,5 @@
     <!-- <param name="/ukf_se/odom0_config" value="{true,true,true,}"/> -->
 
     <node pkg="snow_removal" type="path_tracking.py" name="path_tracking"/>
+    <node pkg='web_video_server' type="web_video_server" name="web_video_server"/>
 </launch>

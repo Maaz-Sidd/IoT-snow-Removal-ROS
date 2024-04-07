@@ -39,8 +39,8 @@
         <arg name="depth_topic" value="/camera/aligned_depth_to_color/image_raw"/>
         <arg name="camera_info_topic" value="/camera/color/camera_info"/>
         <arg name="depth_camera_info_topic" value="/camera/depth/camera_info"/>
-        <arg name="rtabmapviz" value="false"/>
-        <arg name="rviz" value="true"/>
+        <arg name="rtabmapviz" value="true"/>
+        <arg name="rviz" value="false"/>
     </include>
 
     <include file="$(find robot_localization)/launch/ukf_template.launch"/>
@@ -68,4 +68,5 @@
     <param name="/ukf_se/imu0_relative" value="false"/>
     <param name="/ukf_se/use_control" value="false"/>
     <!-- <param name="/ukf_se/odom0_config" value="{true,true,true,}"/> -->
+    <node pkg='web_video_server' type="web_video_server" name="web_video_server"/>
 </launch>

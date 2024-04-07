@@ -65,7 +65,6 @@
     
     <!-- move_base -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-        <param name="odom_topic" value="odom"/>
         <param name="pose_topic" value="/rtabmap/localization_pose"/>
         <param name="map_topic" value="/map"/>
         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
