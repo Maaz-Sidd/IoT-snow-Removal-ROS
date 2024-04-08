@@ -5,12 +5,14 @@ from enum import Enum
 import os
 import time
 from std_msgs.msg import UInt8, Float64, String
+from geometry_msgs.msg import Twist
 
 class CoreNodeController():
     def __init__(self):
         self.ros_package_path = os.path.dirname(os.path.realpath(__file__))
         self.ros_package_path = self.ros_package_path.replace('snow_removal/nodes', '')
         self.sub_mode_control = rospy.Subscriber('/chatter', String, self.cbReceiveMode, queue_size=1)
+        self.pub_cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size = 1)
   
         self.Launcher = Enum('Launcher', 'idle teleop_cam mapping save_map path_planning done_path auto done_auto' )
 
@@ -158,6 +160,15 @@ class CoreNodeController():
                 if self.auto == True:
                     self.auto = False
                     self.auto_.shutdown()
+                    time.sleep(1.2)
+                    twist = Twist()     
+                    twist.linear.x = 0
+                    twist.linear.y = 0
+                    twist.linear.z = 0
+                    twist.angular.x = 0
+                    twist.angular.y = 0
+                    twist.angular.z = 0
+                    self.pub_cmd_vel.publish(twist)
                 else:
                     pass   
                            
